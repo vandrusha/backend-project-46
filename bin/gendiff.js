@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import comparator from '../src/index.js';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
+import YAML from 'yaml';
 
 const program = new Command();
 program
@@ -16,8 +17,26 @@ program
         const resolvedPath2 = path.resolve(filepath2);
         const file1 = readFileSync(resolvedPath1);
         const file2 = readFileSync(resolvedPath2);
-        const fileObj1 = JSON.parse(file1);
-        const fileObj2 = JSON.parse(file2);
+        const fileExtension1 = path.extname(resolvedPath1);
+        const fileExtension2 = path.extname(resolvedPath2);
+        let fileObj1;
+        switch (fileExtension1) {
+            case '.json':
+                fileObj1 = JSON.parse(file1);
+                break
+            case '.yaml':
+                fileObj1 = YAML.parse(file1);
+                break
+        }
+        let fileObj2;
+        switch (fileExtension2) {
+            case '.json':
+                fileObj2 = JSON.parse(file2);
+                break
+            case '.yaml':
+                fileObj2 = YAML.parse(file2);
+                break
+        }
         comparator(fileObj1, fileObj2);
     })
     .option('-f, --format <type>', 'output format')
