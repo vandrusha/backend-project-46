@@ -1,5 +1,5 @@
 install: 
-	npm i -g
+	npm ci
 
 test:
 	npx jest
