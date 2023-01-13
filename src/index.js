@@ -17,9 +17,12 @@ const comparator = (file1, file2) => {
         }
     })
     const sortedResults = _.sortBy(results, a => a[1]);
-    const diffStr = sortedResults
+
+    let diffStr = sortedResults
         .map(item => `${item[0]} ${item[1]}: ${item[2]}`)
         .join('\n');
-    console.log(`{\n${diffStr}\n}`);
+    diffStr = `{\n${diffStr}\n}`;
+    console.log(diffStr);
+    return diffStr;
 };
 export default comparator;
