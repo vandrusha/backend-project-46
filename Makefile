@@ -1,5 +1,5 @@
-install: install-deps
-	npx simple-git-hooks
+install: 
+	npm i -g
 
 test:
 	npx jest
