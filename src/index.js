@@ -22,7 +22,6 @@ const comparator = (file1, file2) => {
         .map(item => `${item[0]} ${item[1]}: ${item[2]}`)
         .join('\n');
     diffStr = `{\n${diffStr}\n}`;
-    console.log(diffStr);
     return diffStr;
 };
 export default comparator;

@@ -38,6 +38,6 @@ program
                 fileObj2 = YAML.parse(file2);
                 break
         }
-        comparator(fileObj1, fileObj2);
+        console.log(comparator(fileObj1, fileObj2));
     })
 program.parse();
