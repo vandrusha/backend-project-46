@@ -3,7 +3,7 @@ import { Command } from 'commander';
 import comparator from '../src/index.js';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
-import YAML from 'yaml';
+import parser from '../src/parsers.js';
 
 const program = new Command();
 program
@@ -20,24 +20,8 @@ program
         const file2 = readFileSync(resolvedPath2);
         const fileExtension1 = path.extname(resolvedPath1);
         const fileExtension2 = path.extname(resolvedPath2);
-        let fileObj1;
-        switch (fileExtension1) {
-            case '.json':
-                fileObj1 = JSON.parse(file1);
-                break
-            case '.yaml':
-                fileObj1 = YAML.parse(file1);
-                break
-        }
-        let fileObj2;
-        switch (fileExtension2) {
-            case '.json':
-                fileObj2 = JSON.parse(file2);
-                break
-            case '.yaml':
-                fileObj2 = YAML.parse(file2);
-                break
-        }
+        const fileObj1 = parser(file1, fileExtension1);
+        const fileObj2 = parser(file2, fileExtension2);
         console.log(comparator(fileObj1, fileObj2));
     })
 program.parse();
