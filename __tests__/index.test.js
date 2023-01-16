@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals';
+import { beforeAll, test, expect } from '@jest/globals';
 import comparator from '../src/index.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
