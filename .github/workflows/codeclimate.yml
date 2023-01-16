@@ -1,27 +1,14 @@
 name: build
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - '!*' # Do not execute on tags
-    paths:
-      - src/*
-      - __tests__/*
-      - bin/*
-      - '*.json'
-      - yarn.lock
-  pull_request:
-    paths:
-      - '!*.MD'
+  - push
+  - pull_request
 jobs:
   test:
     strategy:
       matrix:
-        platform: [ ubuntu-latest, macOS-latest ]
-        node: [ '12', '10' ]
-    name: test/node ${{ matrix.node }}/${{ matrix.platform }}
-    runs-on: ${{ matrix.platform }}
+        node-version: [18.x]
+    name: test/node
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
