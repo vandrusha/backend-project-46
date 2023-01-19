@@ -20,6 +20,5 @@ beforeAll(() => {
     expectedResult = String(readFile('expectedResult.txt'));
 });
 test('comparator', () => {
-    console.log('expectedResult:', expectedResult);
     expect(comparator(file1, file2)).toEqual(expectedResult);
 });
