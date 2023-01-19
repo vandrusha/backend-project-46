@@ -13,4 +13,5 @@ const parser = (file, ext) => {
     }
     return parsedFile;
 }
-export default parser;
+
+export { parser };
