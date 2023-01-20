@@ -9,16 +9,15 @@ const program = new Command();
 program
     .name('gendiff')
     .version('1.0.0')
-    .option('-f, --format <type>', 'output format')
+    .option('-f, --format <type>', 'output format. Stylish is used by default')
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1> <filepath2>')
-    .parse()
     .action((filepath1, filepath2, options) => {
-        const formatType = options.format ? options.format : 'stylish';
+        const formatType = options.format;
         const resolvedPath1 = path.resolve(filepath1);
         const resolvedPath2 = path.resolve(filepath2);
-        const file1 = readFileSync(resolvedPath1);
-        const file2 = readFileSync(resolvedPath2);
+        const file1 = readFileSync(resolvedPath1, 'utf8');
+        const file2 = readFileSync(resolvedPath2, 'utf8');
         const fileExtension1 = path.extname(resolvedPath1);
         const fileExtension2 = path.extname(resolvedPath2);
         const fileObj1 = parser(file1, fileExtension1);
