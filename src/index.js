@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as formatter from './formatters.js'
+import formatter from '../formatters/index.js'
 const makeCompObj = (state, origValue = '', newValue = '', children = {}) => ({ state, origValue, newValue, children });
 const comparator = (obj1, obj2, style = 'stylish') => {
     const diff = (file1, file2) => {
@@ -29,6 +29,6 @@ const comparator = (obj1, obj2, style = 'stylish') => {
         return results;
     }
     const diffArr = diff(obj1, obj2);
-    return formatter[style](diffArr);
+    return formatter(diffArr, style);
 };
 export default comparator;
