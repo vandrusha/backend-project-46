@@ -17,6 +17,7 @@ let yamlFile1;
 let yamlFile2;
 let expectedResult;
 let expectedPlain;
+let expectedJson;
 
 beforeAll(() => {
     jsonFile1 = JSON.parse(readFile('file1.json'));
@@ -25,6 +26,7 @@ beforeAll(() => {
     yamlFile2 = YAML.parse(readFile('file2.yaml'));
     expectedResult = String(readFile('expectedResult.txt'));
     expectedPlain = String(readFile('expectedPlain.txt'));
+    expectedJson = String(readFile('expectedJson.txt'));
 });
 test('json files, default format', () => {
     expect(comparator(jsonFile1, jsonFile2)).toEqual(expectedResult);
@@ -34,4 +36,7 @@ test('yaml files, default format', () => {
 });
 test('plain format', () => {
     expect(comparator(jsonFile1, jsonFile2, 'plain')).toEqual(expectedPlain);
+});
+test('json format', () => {
+    expect(comparator(jsonFile1, jsonFile2, 'json')).toEqual(expectedJson);
 });
