@@ -1,5 +1,6 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
+import json from './json.js';
 
 const selector = (diffArr, style) => {
     let result;
@@ -9,6 +10,9 @@ const selector = (diffArr, style) => {
             break;
         case 'plain':
             result = plain(diffArr);
+            break;
+        case 'json':
+            result = json(diffArr);
             break;
         default:
             result = stylish(diffArr);
