@@ -32,7 +32,7 @@ test('json files, default format', () => {
     expect(comparator(jsonFile1, jsonFile2)).toEqual(expectedResult);
 });
 test('yaml files, default format', () => {
-    expect(comparator(yamlFile1, yamlFile2)).toEqual(expectedResult);
+    expect(comparator(yamlFile1, yamlFile2, 'stylish')).toEqual(expectedResult);
 });
 test('plain format', () => {
     expect(comparator(jsonFile1, jsonFile2, 'plain')).toEqual(expectedPlain);
