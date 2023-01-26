@@ -2,3 +2,5 @@ node_modules/
 hexlet-code-1.0.0.tgz
 .eslintrc.json
 coverage/
+.DS_Store
+__fixtures__/.DS_Store
