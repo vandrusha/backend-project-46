@@ -1,10 +1,13 @@
 import _ from 'lodash';
 
-const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a; }, {});
+const sortObj = (obj) => Object
+    .keys(obj)
+    .sort((a, b) => a > b ? 1 : -1)
+    .reduce((a, b) => { a[b] = obj[b]; return a; }, {});
 
 const plain = (file, root = '') => {
     const sortedObj = sortObj(file);
-    let result = [];
+    const result = [];
     const parsedValue = (val) => {
         let parsedVal;
         switch (typeof val) {
@@ -24,10 +27,8 @@ const plain = (file, root = '') => {
             result.push(`Property '${root}${key}' was removed`);
         } else if (value.state === 'added') {
             result.push(`Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`);
-        } else if (value.state === 'equal') {
-            if (_.values(value.children).length !== 0) {
-                result.push(plain(value.children, `${root}${key}.`));
-            }
+        } else if (value.state === 'equal' && _.values(value.children).length !== 0) {
+            result.push(plain(value.children, `${root}${key}.`));
         } else {
             if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
                 result.push(`Property '${root}${key}' was updated. From [complex value] to [complex value]`);

@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-const ind = (num) => {
-    return ' '.repeat(num);
-};
-const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a; }, {});
-
+const ind = (num) => ' '.repeat(num);
+const sortObj = (obj) => Object
+    .keys(obj)
+    .sort((a, b) => a > b ? 1 : -1)
+    .reduce((a, b) => { a[b] = obj[b]; return a; }, {});
 const objToStr = (obj, mul) => {
     let result = '';
     _.forIn(obj, (value, key) => {
@@ -24,7 +24,7 @@ const stylish = (file) => {
             equal: ' ',
             removed: '-',
             updated: '-',
-            added: '+'
+            added: '+',
         };
         _.forIn(sortedObj, (value, key) => {
             const pattern = `${ind(mul)}${stateMap[value.state]} ${key}: `;

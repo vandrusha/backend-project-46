@@ -1,4 +1,5 @@
 import YAML from 'yaml';
+
 const parser = (file, ext) => {
     let parsedFile;
     switch (ext) {
@@ -9,7 +10,10 @@ const parser = (file, ext) => {
         case '.yml':
             parsedFile = YAML.parse(file);
             break;
+        default:
+            parsedFile = JSON.parse(file);
     }
     return parsedFile;
 };
-export { parser };
+export default parser
+    ;

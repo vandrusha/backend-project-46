@@ -1,8 +1,8 @@
+import path from 'path';
 import { beforeAll, test, expect } from '@jest/globals';
 import comparator from '../src/index.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

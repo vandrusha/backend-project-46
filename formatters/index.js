@@ -1,6 +1,7 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
+
 const selector = (diffArr, style) => {
     let result;
     switch (style) {
