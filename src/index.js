@@ -1,7 +1,18 @@
 import _ from 'lodash';
+import path from 'node:path';
+import { readFileSync } from 'node:fs';
+import { parser } from '../src/parsers.js';
 import formatter from '../formatters/index.js';
 const makeCompObj = (state, origValue = '', newValue = '', children = {}) => ({ state, origValue, newValue, children });
-const comparator = (obj1, obj2, style = 'stylish') => {
+const comparator = (filepath1, filepath2, style = 'stylish') => {
+    const resolvedPath1 = path.resolve(filepath1);
+    const resolvedPath2 = path.resolve(filepath2);
+    const file1 = readFileSync(resolvedPath1, 'utf8');
+    const file2 = readFileSync(resolvedPath2, 'utf8');
+    const fileExtension1 = path.extname(resolvedPath1);
+    const fileExtension2 = path.extname(resolvedPath2);
+    const obj1 = parser(file1, fileExtension1);
+    const obj2 = parser(file2, fileExtension2);
     const diff = (file1, file2) => {
         const results = {};
         _.forIn(file1, (value, key) => {
