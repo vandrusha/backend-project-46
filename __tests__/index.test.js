@@ -10,7 +10,7 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf8');
 
 let jsonFile1;
-let jsonFile2
+let jsonFile2;
 let yamlFile1;
 let yamlFile2;
 let expectedResult;

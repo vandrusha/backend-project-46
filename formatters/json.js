@@ -6,7 +6,7 @@ const json = (file) => {
             return undefined;
         }
         return value;
-    }
+    };
     return JSON.stringify(file, replacer);
-}
+};
 export default json;

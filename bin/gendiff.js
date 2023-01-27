@@ -12,5 +12,5 @@ program
     .action((filepath1, filepath2, options) => {
         const formatType = options.format;
         console.log(comparator(filepath1, filepath2, formatType));
-    })
+    });
 program.parse();

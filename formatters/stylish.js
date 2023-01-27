@@ -2,8 +2,8 @@ import _ from 'lodash';
 
 const ind = (num) => {
     return ' '.repeat(num);
-}
-const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a }, {});
+};
+const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a; }, {});
 
 const objToStr = (obj, mul) => {
     let result = '';
@@ -36,22 +36,22 @@ const stylish = (file) => {
                 }
             } else if (value.state === 'removed' || value.state === 'added') {
                 if (_.isObject(value.origValue)) {
-                    result += `${pattern}{${objToStr(value.origValue, mul + 4)}\n${ind(mul + 2)}}`
+                    result += `${pattern}{${objToStr(value.origValue, mul + 4)}\n${ind(mul + 2)}}`;
                 } else {
-                    result += `${pattern}${value.origValue}`
+                    result += `${pattern}${value.origValue}`;
                 }
             } else {
                 result += _.isObject(value.origValue)
                     ? `${ind(mul)}- ${key}: {${objToStr(value.origValue, mul + 4)}\n${ind(mul + 2)}}\n`
-                    : `${ind(mul)}- ${key}: ${value.origValue}\n`
+                    : `${ind(mul)}- ${key}: ${value.origValue}\n`;
                 result += _.isObject(value.newValue)
                     ? `${ind(mul)}+ ${key}: {${objToStr(value.newValue, mul + 4)}\n${ind(mul + 2)}}`
-                    : `${ind(mul)}+ ${key}: ${value.newValue}`
+                    : `${ind(mul)}+ ${key}: ${value.newValue}`;
             }
             result += '\n';
         });
         return result;
-    }
+    };
     return `{\n${iter(file, 2)}}`;
 };
 export default stylish;

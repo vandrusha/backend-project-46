@@ -38,7 +38,7 @@ const comparator = (filepath1, filepath2, style = 'stylish') => {
             }
         });
         return results;
-    }
+    };
     const diffArr = diff(obj1, obj2);
     return formatter(diffArr, style);
 };

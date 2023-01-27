@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a }, {});
+const sortObj = (obj) => Object.keys(obj).sort((a, b) => a > b ? 1 : -1).reduce((a, b) => { a[b] = obj[b]; return a; }, {});
 
 const plain = (file, root = '') => {
     const sortedObj = sortObj(file);
@@ -10,7 +10,7 @@ const plain = (file, root = '') => {
         switch (typeof val) {
             case 'string':
                 parsedVal = `'${val}'`;
-                break
+                break;
             case 'object':
                 parsedVal = val === null ? 'null' : '[complex value]';
                 break;
@@ -18,7 +18,7 @@ const plain = (file, root = '') => {
                 parsedVal = val;
         }
         return parsedVal;
-    }
+    };
     _.forIn(sortedObj, (value, key) => {
         if (value.state === 'removed') {
             result.push(`Property '${root}${key}' was removed`);
