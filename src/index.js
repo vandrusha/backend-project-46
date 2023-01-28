@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
-import { parser } from './parsers.js';
+import parser from './parsers.js';
 import formatter from '../formatters/index.js';
 
 const makeCompObj = (state, origValue = '', newValue = '', children = {}) => ({
