@@ -11,14 +11,14 @@ const plain = (file, root = '') => {
   const parsedValue = (val) => {
     let parsedVal;
     switch (typeof val) {
-    case 'string':
-      parsedVal = `'${val}'`;
-      break;
-    case 'object':
-      parsedVal = val === null ? 'null' : '[complex value]';
-      break;
-    default:
-      parsedVal = val;
+      case 'string':
+        parsedVal = `'${val}'`;
+        break;
+      case 'object':
+        parsedVal = val === null ? 'null' : '[complex value]';
+        break;
+      default:
+        parsedVal = val;
     }
     return parsedVal;
   };

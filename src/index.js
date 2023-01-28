@@ -5,7 +5,7 @@ import parser from './parsers.js';
 import formatter from '../formatters/index.js';
 
 const makeCompObj = (state, origValue = '', newValue = '', children = {}) => ({
-  state, origValue, newValue, children
+  state, origValue, newValue, children,
 });
 const comparator = (filepath1, filepath2, style = 'stylish') => {
   const resolvedPath1 = path.resolve(filepath1);
