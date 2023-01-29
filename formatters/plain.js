@@ -22,28 +22,32 @@ const plain = (file, root = '') => {
     }
     return parsedVal;
   };
-  _.forIn(sortedObj, (value, key) => {
-    if (value.state === 'removed') {
-      result.push(`Property '${root}${key}' was removed`);
-    } else if (value.state === 'added') {
-      result.push(`Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`);
-    } else if (value.state === 'equal') {
-      if (_.values(value.children).length !== 0) {
-        result.push(plain(value.children, `${root}${key}.`));
-      }
-    } else {
-      if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From [complex value] to [complex value]`);
-      } else if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to [complex value]`);
-      } else if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From [complex value] to ${parsedValue(value.newValue)}`);
+  return Object.entries(sortedObj)
+    .reduce((acc, entry) => {
+      const key = entry[0];
+      const value = entry[1];
+      if (value.state === 'removed') {
+        acc.push(`Property '${root}${key}' was removed`);
+      } else if (value.state === 'added') {
+        acc.push(`Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`);
+      } else if (value.state === 'equal') {
+        if (_.values(value.children).length !== 0) {
+          acc.push(plain(value.children, `${root}${key}.`));
+        }
       } else {
-        result.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to ${parsedValue(value.newValue)}`);
+        if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
+          acc.push(`Property '${root}${key}' was updated. From [complex value] to [complex value]`);
+        } else if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
+          acc.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to [complex value]`);
+        } else if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
+          acc.push(`Property '${root}${key}' was updated. From [complex value] to ${parsedValue(value.newValue)}`);
+        } else {
+          acc.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to ${parsedValue(value.newValue)}`);
+        }
       }
-    }
-  });
-  return result.join('\n');
+      return acc;
+    }, [])
+    .join('\n');
 };
 
 export default plain;
