@@ -22,19 +22,22 @@ beforeAll(() => {
   jsonFile2 = getFixturePath('file2.json');
   yamlFile1 = getFixturePath('file1.yaml');
   yamlFile2 = getFixturePath('file2.yaml');
-  expectedResult = readFile('expectedResult.txt');
-  expectedPlain = readFile('expectedPlain.txt');
-  expectedJson = readFile('expectedJson.txt');
+  expectedResult = String(readFile('expectedResult.txt'));
+  expectedPlain = String(readFile('expectedPlain.txt'));
+  expectedJson = String(readFile('expectedJson.txt'));
 });
 test('json files, default format', () => {
+
   expect(comparator(jsonFile1, jsonFile2)).toEqual(expectedResult);
 });
 test('yaml files, default format', () => {
   expect(comparator(yamlFile1, yamlFile2, 'stylish')).toEqual(expectedResult);
 });
 test('plain format', () => {
+  console.log(comparator(jsonFile1, jsonFile2, 'plain'));
   expect(comparator(jsonFile1, jsonFile2, 'plain')).toEqual(expectedPlain);
 });
 test('json format', () => {
+  console.log(comparator(jsonFile1, jsonFile2, 'json'));
   expect(comparator(jsonFile1, jsonFile2, 'json')).toEqual(expectedJson);
 });

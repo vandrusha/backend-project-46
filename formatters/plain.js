@@ -7,7 +7,6 @@ const sortObj = (obj) => Object
 
 const plain = (file, root = '') => {
   const sortedObj = sortObj(file);
-  const result = [];
   const parsedValue = (val) => {
     let parsedVal;
     switch (typeof val) {

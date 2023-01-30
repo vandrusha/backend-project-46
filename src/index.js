@@ -34,9 +34,13 @@ const comparator = (filepath1, filepath2, style = 'stylish') => {
     } else {
       acc[key] = makeCompObj('equal', '', '', diff(value, file2[key]));
     }
-    Object.entries(file2)
-      .filter(entry2 => !_.has(file1, entry2[0]))
-      .map(entry2 => acc[entry2[0]] = makeCompObj('added', entry2[1]));
+    const entry2Results = Object.entries(file2).reduce((acc, entry2) => {
+      if (!_.has(file1, entry2[0])) {
+        acc[entry2[0]] = makeCompObj('added', entry2[1]);
+      }
+      return acc;
+    }, {});
+    Object.assign(acc, entry2Results);
     return acc;
   }, {});
   const diffArr = diff(obj1, obj2);
