@@ -45,7 +45,7 @@ const stylish = (file) => {
         acc += _.isObject(value.origValue)
           ? `${ind(mul)}- ${key}: {${objToStr(value.origValue, mul + 4)}\n${ind(mul + 2)}}\n`
           : `${ind(mul)}- ${key}: ${value.origValue}\n`;
-          acc += _.isObject(value.newValue)
+        acc += _.isObject(value.newValue)
           ? `${ind(mul)}+ ${key}: {${objToStr(value.newValue, mul + 4)}\n${ind(mul + 2)}}`
           : `${ind(mul)}+ ${key}: ${value.newValue}`;
       }
