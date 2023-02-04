@@ -23,9 +23,8 @@ const comparator = (filepath1, filepath2, style = 'stylish') => {
           return { [key]: makeCompObj('equal', value) };
         } else if (_.has(file2, key)) {
           return { [key]: makeCompObj('updated', value, newVal) };
-        } else {
-          return { [key]: makeCompObj('removed', value) };
         }
+        return { [key]: makeCompObj('removed', value) };
       } else if (!_.has(file2, key)) {
         return { [key]: makeCompObj('removed', value) };
       } else if (!_.isObject(newVal)) {
