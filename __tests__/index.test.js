@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { beforeAll, test, expect } from '@jest/globals';
+import { test, expect } from '@jest/globals';
 import fs from 'fs';
 import comparator from '../src/index.js';
 
@@ -9,23 +9,13 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf8');
 
-let jsonFile1;
-let jsonFile2;
-let yamlFile1;
-let yamlFile2;
-let expectedResult;
-let expectedPlain;
-let expectedJson;
-
-beforeAll(() => {
-  jsonFile1 = getFixturePath('file1.json');
-  jsonFile2 = getFixturePath('file2.json');
-  yamlFile1 = getFixturePath('file1.yaml');
-  yamlFile2 = getFixturePath('file2.yaml');
-  expectedResult = readFile('expectedResult.txt');
-  expectedPlain = readFile('expectedPlain.txt');
-  expectedJson = readFile('expectedJson.txt');
-});
+const jsonFile1 = getFixturePath('file1.json');
+const jsonFile2 = getFixturePath('file2.json');
+const yamlFile1 = getFixturePath('file1.yaml');
+const yamlFile2 = getFixturePath('file2.yaml');
+const expectedResult = String(readFile('expectedResult.txt'));
+const expectedPlain = String(readFile('expectedPlain.txt'));
+const expectedJson = String(readFile('expectedJson.txt'));
 test('json files, default format', () => {
   expect(comparator(jsonFile1, jsonFile2)).toEqual(expectedResult);
 });

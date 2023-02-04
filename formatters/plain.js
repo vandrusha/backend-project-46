@@ -1,49 +1,50 @@
 import _ from 'lodash';
 
-const sortObj = (obj) => Object
-  .keys(obj)
-  .sort((a, b) => a > b ? 1 : -1)
-  .reduce((a, b) => { a[b] = obj[b]; return a; }, {});
-
+const sortObj = (obj) => {
+  const sorted = _.sortBy(Object.keys(obj));
+  return sorted.reduce((a, b) => ({ ...a, [b]: obj[b] }), {});
+};
 const plain = (file, root = '') => {
   const sortedObj = sortObj(file);
-  const result = [];
   const parsedValue = (val) => {
-    let parsedVal;
-    switch (typeof val) {
-      case 'string':
-        parsedVal = `'${val}'`;
-        break;
-      case 'object':
-        parsedVal = val === null ? 'null' : '[complex value]';
-        break;
-      default:
-        parsedVal = val;
+    const valType = typeof val;
+    if (valType === 'string') {
+      return `'${val}'`;
     }
-    return parsedVal;
+    if (valType === 'object') {
+      return val === null ? 'null' : '[complex value]';
+    }
+    return val;
   };
-  _.forIn(sortedObj, (value, key) => {
-    if (value.state === 'removed') {
-      result.push(`Property '${root}${key}' was removed`);
-    } else if (value.state === 'added') {
-      result.push(`Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`);
-    } else if (value.state === 'equal') {
-      if (_.values(value.children).length !== 0) {
-        result.push(plain(value.children, `${root}${key}.`));
+  return Object.entries(sortedObj)
+    .reduce((acc, entry) => {
+      const key = entry[0];
+      const value = entry[1];
+      if (value.state === 'removed') {
+        return [...acc, `Property '${root}${key}' was removed`];
       }
-    } else {
-      if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From [complex value] to [complex value]`);
-      } else if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to [complex value]`);
-      } else if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
-        result.push(`Property '${root}${key}' was updated. From [complex value] to ${parsedValue(value.newValue)}`);
+      if (value.state === 'added') {
+        return [...acc, `Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`];
+      }
+      if (value.state === 'equal') {
+        if (_.values(value.children).length !== 0) {
+          return [...acc, plain(value.children, `${root}${key}.`)];
+        }
       } else {
-        result.push(`Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to ${parsedValue(value.newValue)}`);
+        if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
+          return [...acc, `Property '${root}${key}' was updated. From [complex value] to [complex value]`];
+        }
+        if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
+          return [...acc, `Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to [complex value]`];
+        }
+        if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
+          return [...acc, `Property '${root}${key}' was updated. From [complex value] to ${parsedValue(value.newValue)}`];
+        }
+        return [...acc, `Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to ${parsedValue(value.newValue)}`];
       }
-    }
-  });
-  return result.join('\n');
+      return acc;
+    }, [])
+    .join('\n');
 };
 
 export default plain;
