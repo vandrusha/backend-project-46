@@ -30,9 +30,8 @@ const comparator = (filepath1, filepath2, style = 'stylish') => {
         return { [key]: makeCompObj('removed', value) };
       } else if (!_.isObject(newVal)) {
         return { [key]: makeCompObj('updated', value, newVal) };
-      } else {
-        return { [key]: makeCompObj('equal', '', '', diff(value, newVal)) };
       }
+      return { [key]: makeCompObj('equal', '', '', diff(value, newVal)) };
     };
     const file1Obj = iter(entry[0], entry[1], file2[entry[0]]);
     const entry2Results = Object.entries(file2).reduce((acc2, entry2) => {
