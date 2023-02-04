@@ -17,31 +17,31 @@ const comparator = (filepath1, filepath2, style = 'stylish') => {
   const obj1 = parser(parsedFile1, fileExtension1);
   const obj2 = parser(parsedFile2, fileExtension2);
   const diff = (file1, file2) => Object.entries(file1).reduce((acc, entry) => {
-    const key = entry[0];
-    const value = entry[1];
-    if (!_.isObject(value)) {
-      if (file2[key] === value) {
-        acc[key] = makeCompObj('equal', value);
-      } else if (_.has(file2, key)) {
-        acc[key] = makeCompObj('updated', value, file2[key]);
+    const iter = (key, value, newVal) => {
+      if (!_.isObject(value)) {
+        if (file2[key] === value) {
+          return { [key]: makeCompObj('equal', value) };
+        } else if (_.has(file2, key)) {
+          return { [key]: makeCompObj('updated', value, newVal) };
+        } else {
+          return { [key]: makeCompObj('removed', value) };
+        }
+      } else if (!_.has(file2, key)) {
+        return { [key]: makeCompObj('removed', value) };
+      } else if (!_.isObject(newVal)) {
+        return { [key]: makeCompObj('updated', value, newVal) };
       } else {
-        acc[key] = makeCompObj('removed', value);
+        return { [key]: makeCompObj('equal', '', '', diff(value, newVal)) };
       }
-    } else if (!_.has(file2, key)) {
-      acc[key] = makeCompObj('removed', value);
-    } else if (!_.isObject(file2[key])) {
-      acc[key] = makeCompObj('updated', value, file2[key]);
-    } else {
-      acc[key] = makeCompObj('equal', '', '', diff(value, file2[key]));
-    }
-    const entry2Results = Object.entries(file2).reduce((acc, entry2) => {
-      if (!_.has(file1, entry2[0])) {
-        acc[entry2[0]] = makeCompObj('added', entry2[1]);
-      }
-      return acc;
+    };
+    const file1Obj = iter(entry[0], entry[1], file2[entry[0]]);
+    const entry2Results = Object.entries(file2).reduce((acc2, entry2) => {
+      const key2 = entry2[0];
+      return !_.has(file1, entry2[0])
+        ? { ...acc2, ...file1Obj, [key2]: makeCompObj('added', entry2[1]) }
+        : { ...acc2, ...file1Obj };
     }, {});
-    Object.assign(acc, entry2Results);
-    return acc;
+    return { ...acc, ...entry2Results };
   }, {});
   const diffArr = diff(obj1, obj2);
   return formatter(diffArr, style);
