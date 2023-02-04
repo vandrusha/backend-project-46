@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { beforeAll, test, expect } from '@jest/globals';
+import { test, expect } from '@jest/globals';
 import fs from 'fs';
 import comparator from '../src/index.js';
 
