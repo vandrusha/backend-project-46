@@ -10,4 +10,7 @@
 ### Use of different output formatting
 [![asciicast](https://asciinema.org/a/44WujPXMppiYn1s8IL4cB7l5l.svg)](https://asciinema.org/a/44WujPXMppiYn1s8IL4cB7l5l)
 
+<<<<<<< HEAD
 some text for the final commit
+=======
+>>>>>>> 97a1e273553079000e73cdcafe40364ae90f8ac6
