@@ -10,7 +10,8 @@ const plain = (file, root = '') => {
     const valType = typeof val;
     if (valType === 'string') {
       return `'${val}'`;
-    } else if (valType === 'object') {
+    }
+    if (valType === 'object') {
       return val === null ? 'null' : '[complex value]';
     }
     return val;
@@ -21,18 +22,22 @@ const plain = (file, root = '') => {
       const value = entry[1];
       if (value.state === 'removed') {
         return [...acc, `Property '${root}${key}' was removed`];
-      } else if (value.state === 'added') {
+      }
+      if (value.state === 'added') {
         return [...acc, `Property '${root}${key}' was added with value: ${parsedValue(value.origValue)}`];
-      } else if (value.state === 'equal') {
+      }
+      if (value.state === 'equal') {
         if (_.values(value.children).length !== 0) {
           return [...acc, plain(value.children, `${root}${key}.`)];
         }
       } else {
         if (_.isObject(value.origValue) && _.isObject(value.newValue)) {
           return [...acc, `Property '${root}${key}' was updated. From [complex value] to [complex value]`];
-        } else if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
+        }
+        if (!_.isObject(value.origValue) && _.isObject(value.newValue)) {
           return [...acc, `Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to [complex value]`];
-        } else if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
+        }
+        if (_.isObject(value.origValue) && !_.isObject(value.newValue)) {
           return [...acc, `Property '${root}${key}' was updated. From [complex value] to ${parsedValue(value.newValue)}`];
         }
         return [...acc, `Property '${root}${key}' was updated. From ${parsedValue(value.origValue)} to ${parsedValue(value.newValue)}`];

@@ -34,7 +34,8 @@ const stylish = (file) => {
           return `${acc}${pattern}{\n${iter(value.children, mul + 4)}${ind(mul + 2)}}\n`;
         }
         return `${acc}${pattern}${value.origValue}\n`;
-      } else if (value.state === 'removed' || value.state === 'added') {
+      }
+      if (value.state === 'removed' || value.state === 'added') {
         if (_.isObject(value.origValue)) {
           return `${acc}${pattern}{${objToStr(value.origValue, mul + 4)}\n${ind(mul + 2)}}\n`;
         }
